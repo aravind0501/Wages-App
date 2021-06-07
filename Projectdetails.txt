@@ -1,0 +1,254 @@
+import React, {Component, useState} from 'react';
+import {
+  Container,
+  Content,
+  Card,
+  CardItem,
+  Text,
+  Body,
+  Icon,
+  Left,
+  Form,
+  Item,
+  Input,
+  Button,
+  Picker,
+  Right,
+} from 'native-base';
+import {ImageBackground} from 'react-native';
+import JSX from './JSX.js';
+import ImagePicker from 'react-native-image-picker';
+const options = {
+  title: 'Select Avatar',
+  customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
+export default function project({navigation}) {
+  const [location, setLocation] = useState('null');
+  const [estimate, setEstimate] = useState('null');
+  const [ensureOtp, setEnsureOtp] = useState('key1');
+  const [selected, setSelected] = useState('null');
+  const [image, setImage] = useState('null');
+  /*const [locationvalue, setLocationvalue] = useState(false);
+  const [estimatevalue, setEstimatevalue] = useState(false);
+  const [ensureotp, setEnsureOtp] = useState(false);
+  const [pickervalue, setPickervalue] = useState(true);
+  const [butvalue, setButvalue] = useState(true);*/
+  const [submitvalue, setSubmitvalue] = useState(true);
+  function onValueChange(value) {
+    setSelected(value);
+    console.log(selected);
+  }
+  function myimage() {
+    ImagePicker.showImagePicker(options, response => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = {uri: response.uri};
+        console.log('image reponse ');
+        setImage(source);
+      }
+    });
+  }
+  return (
+    <Container>
+      <Content>
+        <Card
+          style={{
+            marginTop: 40,
+            marginBottom: 40,
+            marginLeft: 20,
+            marginRight: 20,
+            borderWidth: 4,
+            paddingTop: 0,
+          }}>
+          <CardItem
+            style={{
+              height: 260,
+              flexDirection: 'row',
+              flex: 18,
+              height: 3,
+              borderBottomWidth: 0,
+              borderBottomColor: 'black',
+              borderTopColor: 'black',
+              paddingBottom: 200,
+              paddingTop: 0,
+              paddingLeft: 0,
+            }}>
+            <Body style={{flexDirection: 'row', flex: 18}}>
+              <ImageBackground source={image} style={{width: 320, height: 200}}>
+                <Icon
+                  name="edit"
+                  type="FontAwesome"
+                  color="black"
+                  style={{
+                    fontSize: 30,
+                    paddingTop: 10,
+                    color: 'white',
+                    paddingLeft: 290,
+                  }}
+                />
+                <Icon
+                  name="pluscircle"
+                  type="AntDesign"
+                  style={{
+                    fontSize: 60,
+                    paddingTop: 30,
+                    color: 'black',
+                    paddingLeft: 140,
+                  }}
+                  onPress={myimage}
+                />
+              </ImageBackground>
+            </Body>
+          </CardItem>
+
+          <CardItem
+            style={{
+              borderBottomWidth: 0,
+              paddingTop: 5,
+              flexDirection: 'row',
+              flex: 14,
+            }}>
+            <Body style={{flex: 10, flexDirection: 'row'}}>
+              <Form style={{flex: 10, flexDirection: 'row', paddingTop: 10}}>
+                <Item rounded style={{backgroundColor: '#f2f6fc'}}>
+                  <Icon name="location-pin" type="Entypo" />
+                  <Input
+                    placeholder="Location"
+                    onChangeText={text => setLocation(text)}
+                  />
+                </Item>
+              </Form>
+            </Body>
+          </CardItem>
+          <CardItem
+            style={{
+              borderBottomWidth: 0,
+              paddingTop: 10,
+              flexDirection: 'row',
+              flex: 14,
+            }}>
+            <Body style={{flexDirection: 'row', flex: 10}}>
+              <Form
+                style={{
+                  flexDirection: 'row',
+                  flex: 10,
+                  borderWidth: 1,
+                  borderRadius: 30,
+                  borderColor: '#f9f9fa',
+                  backgroundColor: '#f2f3fc',
+                }}>
+                <Picker
+                  note
+                  mode="dropdown"
+                  style={{width: 120}}
+                  selectedValue={selected}
+                  onValueChange={onValueChange}
+                  placeholder="type"
+                  style={{color: 'black'}}>
+                  <Picker.Item label="Contract" value="key0" />
+                  <Picker.Item label="Daily Wage" value="key1" />
+                </Picker>
+              </Form>
+            </Body>
+          </CardItem>
+          <CardItem
+            style={{
+              borderBottomWidth: 0,
+              paddingTop: 10,
+              flexDirection: 'row',
+              flex: 14,
+            }}>
+            <Body style={{flex: 10, flexDirection: 'row'}}>
+              <Form style={{flex: 10, flexDirection: 'row'}}>
+                <Item rounded style={{backgroundColor: '#f2f6fc'}}>
+                  <Icon name="dollar" type="FontAwesome" />
+                  <Input
+                    placeholder="Estimate"
+                    onChangeText={text => setEstimate(text)}
+                    keyboardType={'number-pad'}
+                  />
+                </Item>
+              </Form>
+            </Body>
+            <Right style={{flexDirection: 'row', flex: 4}}>
+              <Button
+                style={{
+                  borderRadius: 10,
+                  marginLeft: 10,
+                  flex: 4,
+                  flexDirection: 'row',
+                }}
+                danger>
+                <Text style={{textAlign: 'justify'}}>Send OTP</Text>
+              </Button>
+            </Right>
+          </CardItem>
+          <CardItem style={{flexDirection: 'row', flex: 12}}>
+            <Body style={{flexDirection: 'row', flex: 6}} />
+            <Right
+              style={{
+                flexDirection: 'row',
+                flex: 6,
+              }}
+            />
+          </CardItem>
+          <CardItem
+            style={{
+              borderBottomWidth: 0,
+              paddingTop: 5,
+              flexDirection: 'row',
+              flex: 14,
+            }}>
+            <Body style={{flex: 10, flexDirection: 'row'}}>
+              <Form style={{flexDirection: 'row', flex: 10}}>
+                <Item rounded style={{backgroundColor: '#f2f6fc'}}>
+                  <Input
+                    placeholder="Enter OTP"
+                    onChangeText={text => setEnsureOtp(text)}
+                    keyboardType={'number-pad'}
+                  />
+                  {/*<JSX submit={submitvalue} value={ensureOtp} />*/}
+                </Item>
+              </Form>
+            </Body>
+          </CardItem>
+          <CardItem
+            style={{flexDirection: 'row', flex: 18, borderBottomWidth: 0}}>
+            <Body style={{flexDirection: 'row', flex: 18}}>
+              <Button
+                style={{
+                  flexDirection: 'row',
+                  flex: 18,
+                  width: 90,
+                  justifyContent: 'center',
+                  borderRadius: 20,
+                }}
+                success
+                onPress={() =>
+                  navigation.navigate('projectlist', {
+                    location: location,
+                    estimate: estimate,
+                    projecttype: selected,
+                    avatar: image,
+                  })
+                }>
+                <Text>Submit</Text>
+              </Button>
+            </Body>
+          </CardItem>
+        </Card>
+      </Content>
+    </Container>
+  );
+}

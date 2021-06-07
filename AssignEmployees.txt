@@ -1,0 +1,191 @@
+import React, {Component, useState} from 'react';
+import {
+  Container,
+  Header,
+  Content,
+  Card,
+  CardItem,
+  Body,
+  Text,
+  Left,
+  Thumbnail,
+  Right,
+  Icon,
+  Title,
+  Button,
+  List,
+  ListItem,
+} from 'native-base';
+import {FlatList} from 'react-native';
+employee = [
+  {name: 'Aravind raj', id: 0, value: false},
+  {name: 'Abinanadan', id: 1, value: false},
+  {name: 'Akash', id: 2, value: false},
+  {name: 'Prem Kumar', id: 3, value: false},
+];
+var date = new Date().getDate();
+var month = new Date().getMonth();
+var year = new Date().getFullYear();
+const monthNames = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'April',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sept',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+var current_date = monthNames[month] + ' ' + date + ',' + year;
+
+export default function assign2({navigation}) {
+  const [iconname, setIconname] = useState('checkbox-blank-circle-outline');
+  const [iconcolor, setIconcolor] = useState('black');
+  function changevalue(id) {
+    console.log(id);
+    employee[id] = {
+      ...employee[id],
+      value: !employee[id].value,
+    };
+    if (employee[id].value == true) {
+      setIconcolor('green');
+      setIconname('check-circle');
+    } else {
+      setIconcolor('black');
+      setIconname('checkbox-blank-circle-outline');
+    }
+  }
+  return (
+    <Container>
+      <Header>
+        <Left>
+          <Button transparent>
+            <Icon
+              name="arrow-back"
+              onPress={() => navigation.navigate('full')}
+            />
+          </Button>
+        </Left>
+        <Body style={{flex: 1}}>
+          <Title>Assign Employee</Title>
+        </Body>
+      </Header>
+      <Content>
+        <List>
+          <ListItem
+            selected
+            style={{borderBottomWidth: 0, flexDirection: 'row', flex: 12}}>
+            <Left style={{flexDirection: 'row', flex: 3}} />
+            <Body style={{flexDirection: 'row', flex: 6}}>
+              <Icon name="caretleft" type="AntDesign" />
+              <Text style={{fontSize: 20}}>{current_date}</Text>
+              <Icon name="caretright" type="AntDesign" />
+            </Body>
+            <Right style={{flex: 4, flexDirection: 'row'}} />
+          </ListItem>
+        </List>
+        <FlatList
+          extraData={employee}
+          keyExtractor={(employee, index) => employee.id}
+          data={employee}
+          numColumns={2}
+          renderItem={({item}) => {
+            return (
+              <Card
+                style={{
+                  flex: 1,
+                  flexDirection: 'column',
+                  height: 200,
+                  width: 180,
+                  marginTop: 10,
+                  marginLeft: 10,
+                  marginRight: 8,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.58,
+                  shadowRadius: 4.65,
+                  borderRadius: 0,
+                  elevation: 8,
+                }}>
+                <CardItem
+                  style={{
+                    flex: 18,
+                    flexDirection: 'row',
+                    borderWidth: 0,
+                    borderColor: 'black',
+                    height: 120,
+                    paddingBottom: 80,
+                    marginTop: 10,
+                  }}>
+                  <Left style={{flexDirection: 'row', flex: 2}} />
+                  <Body style={{flexDirection: 'row', flex: 8}}>
+                    <Thumbnail
+                      source={{
+                        uri: 'https://picsum.photos/700',
+                      }}
+                      style={{
+                        width: 95,
+                        height: 95,
+                        borderRadius: 95 / 2,
+                      }}
+                    />
+                  </Body>
+                  <Right style={{flexDirection: 'row', flex: 4}} />
+                </CardItem>
+                <CardItem
+                  style={{flex: 18, flexDirection: 'row', paddingRight: 0}}>
+                  <Left style={{flexDirection: 'row', flex: 2}} />
+                  <Body
+                    style={{
+                      flexDirection: 'row',
+                      flex: 15,
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                        flex: 14,
+                        flexDirection: 'row',
+                      }}>
+                      {item.name}
+                    </Text>
+                  </Body>
+                  <Right style={{flexDirection: 'row', flex: 0}} />
+                </CardItem>
+                <CardItem style={{flex: 18, flexDirection: 'row'}}>
+                  <Left style={{flexDirection: 'row', flex: 6}} />
+                  <Body style={{flexDirection: 'row', flex: 8}} />
+                  <Right style={{flexDirection: 'row', flex: 4}}>
+                    {console.log(item.value)}
+                    <Icon
+                      name={iconname}
+                      type="MaterialCommunityIcons"
+                      style={{
+                        color: iconcolor,
+                        flex: 4,
+                        flexDirection: 'row',
+                        paddingTop: 5,
+                        fontSize: 30,
+                      }}
+                      onPress={() => changevalue(item.id)}
+                    />
+                  </Right>
+                </CardItem>
+              </Card>
+            );
+          }}
+        />
+      </Content>
+    </Container>
+  );
+}

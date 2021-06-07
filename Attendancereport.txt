@@ -1,0 +1,172 @@
+import React from 'react';
+import {View, Text} from 'react-native';
+import {
+  Collapse,
+  CollapseHeader,
+  CollapseBody,
+} from 'accordion-collapse-react-native';
+import {
+  Thumbnail,
+  List,
+  ListItem,
+  Separator,
+  Left,
+  Right,
+  Body,
+  Container,
+  Content,
+  Header,
+  Button,
+  Icon,
+  Title,
+} from 'native-base';
+var date = new Date().getDate();
+var month = new Date().getMonth();
+var year = new Date().getFullYear();
+const monthNames = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'April',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sept',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+var current_date = monthNames[month] + ' ' + date + ',' + year;
+var week_date = monthNames[month] + ' ' + date;
+var today = week_date + '-' + 'Jul 8,2020';
+export default function accordion({navigation}) {
+  return (
+    <Container>
+      <Header>
+        <Left>
+          <Button transparent>
+            <Icon
+              name="arrow-back"
+              onPress={() => navigation.navigate('full')}
+            />
+          </Button>
+        </Left>
+        <Body style={{flex: 1}}>
+          <Title>Attendance Report</Title>
+        </Body>
+      </Header>
+      <Content>
+        <List>
+          <ListItem
+            selected
+            style={{borderBottomWidth: 0, flexDirection: 'row', flex: 18}}>
+            <Left style={{flexDirection: 'row', flex: 4}} />
+            <Body style={{flexDirection: 'row', flex: 14}}>
+              <Icon name="caretleft" type="AntDesign" />
+              <Text style={{fontSize: 20}}>{today}</Text>
+              <Icon name="caretright" type="AntDesign" />
+            </Body>
+          </ListItem>
+        </List>
+        <View>
+          <Collapse>
+            <CollapseHeader style={{height: 70}}>
+              <Separator bordered style={{flexDirection: 'row', flex: 18}}>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 20,
+                    flex: 8,
+                    flexDirection: 'row',
+                  }}>
+                  19 May 2020
+                </Text>
+                <Text style={{flexDirection: 'row', flex: 3}} />
+                <Text
+                  style={{
+                    flexDirection: 'row',
+                    flex: 6,
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                    paddingTop: 5,
+                  }}>
+                  Total present:
+                </Text>
+                <Text
+                  style={{
+                    flexDirection: 'row',
+                    flex: 3,
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    paddingTop: 5,
+                  }}>
+                  34
+                </Text>
+              </Separator>
+            </CollapseHeader>
+            <CollapseBody>
+              <ListItem>
+                <Text>Aravind</Text>
+              </ListItem>
+
+              <ListItem>
+                <Text>Claire Barclay</Text>
+              </ListItem>
+              <ListItem last>
+                <Text>Kelso Brittany</Text>
+              </ListItem>
+            </CollapseBody>
+          </Collapse>
+          <Collapse>
+            <CollapseHeader style={{height: 70}}>
+              <Separator bordered style={{flex: 18, flexDirection: 'row'}}>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 20,
+                    flex: 8,
+                    flexDirection: 'row',
+                  }}>
+                  20 May 2020
+                </Text>
+                <Text style={{flexDirection: 'row', flex: 3}} />
+                <Text
+                  style={{
+                    flexDirection: 'row',
+                    flex: 6,
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                    paddingTop: 0,
+                  }}>
+                  Total present:
+                </Text>
+                <Text
+                  style={{
+                    flexDirection: 'row',
+                    flex: 3,
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    paddingTop: 0,
+                  }}>
+                  34
+                </Text>
+              </Separator>
+            </CollapseHeader>
+            <CollapseBody>
+              <ListItem>
+                <Text>Aaron Bennet</Text>
+              </ListItem>
+              <ListItem>
+                <Text>Claire Barclay</Text>
+              </ListItem>
+              <ListItem last>
+                <Text>Kelso Brittany</Text>
+              </ListItem>
+            </CollapseBody>
+          </Collapse>
+        </View>
+      </Content>
+    </Container>
+  );
+}

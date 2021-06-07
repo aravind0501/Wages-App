@@ -1,0 +1,129 @@
+import React, {Component} from 'react';
+import {
+  Container,
+  Header,
+  Content,
+  Card,
+  CardItem,
+  Text,
+  Body,
+  Left,
+  Right,
+  Button,
+  Icon,
+  Thumbnail,
+} from 'native-base';
+import {View, ImageBackground, FlatList, TouchableOpacity} from 'react-native';
+project = [];
+o = 0;
+export default function projectlist({route, navigation}) {
+  if (route.params != undefined) {
+    const {location} = route.params;
+    const {projecttype} = route.params;
+    const {estimate} = route.params;
+    const {avatar} = route.params;
+    project.push({
+      id: o,
+      location: location,
+      estimate: estimate,
+      image: avatar,
+      projecttype: projecttype == 'key1' ? 'Daily wage' : 'Contract',
+    });
+    o++;
+  }
+
+  return (
+    <Container>
+      <Content padder>
+        <Button
+          style={{
+            width: 180,
+            justifyContent: 'center',
+            marginLeft: 80,
+            marginRight: 80,
+            borderRadius: 10,
+            marginTop: 10,
+            backgroundColor: '#5d9cec',
+          }}
+          iconLeft
+          onPress={() => navigation.navigate('projectdetails2')}>
+          <Icon name="home" type="Entypo" />
+          <Text style={{marginRight: 10, fontWeight: 'bold', fontSize: 15}}>
+            Add Project
+          </Text>
+        </Button>
+        <FlatList
+          extraData={project}
+          keyExtractor={(project, index) => project.id}
+          data={project}
+          numColumns={2}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('project2navigation')}
+                style={{flex: 1, flexDirection: 'column', margin: 1}}>
+                <Card
+                  style={{flex: 1, flexDirection: 'column', margin: 1}}
+                  pointerEvents="none">
+                  <CardItem
+                    style={{
+                      height: 135,
+                      borderBottomWidth: 0,
+                      borderBottomColor: 'black',
+                    }}>
+                    <Body
+                      style={{
+                        flex: 3,
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        paddingLeft: 10,
+                      }}>
+                      <Thumbnail
+                        square
+                        source={item.image}
+                        style={{width: 130, height: 130}}
+                      />
+                    </Body>
+                  </CardItem>
+                  <CardItem
+                    style={{
+                      flexDirection: 'row',
+                      flex: 8,
+                      paddingLeft: 0,
+                      paddingBottom: 0,
+                    }}>
+                    <Left style={{flex: 3, flexDirection: 'row'}}>
+                      <Text
+                        style={{fontWeight: 'bold', alignItems: 'flex-start'}}>
+                        Value:
+                      </Text>
+                    </Left>
+                    <Body style={{flex: 5, flexDirection: 'row'}}>
+                      <Text style={{color: 'green'}}>{item.estimate}</Text>
+                    </Body>
+                  </CardItem>
+                  <CardItem
+                    style={{
+                      flexDirection: 'row',
+                      flex: 8,
+                      paddingLeft: 0,
+                    }}>
+                    <Left style={{flex: 3, flexDirection: 'row'}}>
+                      <Text
+                        style={{fontWeight: 'bold', alignItems: 'flex-start'}}>
+                        Type:
+                      </Text>
+                    </Left>
+                    <Body style={{flex: 5, flexDirection: 'row'}}>
+                      <Text style={{color: 'green'}}>{item.projecttype}</Text>
+                    </Body>
+                  </CardItem>
+                </Card>
+              </TouchableOpacity>
+            );
+          }}
+        />
+      </Content>
+    </Container>
+  );
+}

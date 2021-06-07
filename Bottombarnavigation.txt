@@ -1,0 +1,75 @@
+import React from 'react';
+import {StyleSheet, Text, View, Button, Image} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Nav from './customernavigation.js';
+import employeenavigation from './employeenavigation.js';
+import {Thumbnail} from 'native-base';
+
+const Tab = createBottomTabNavigator();
+function bottomnavigation() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="AttendancePage"
+        tabBarOptions={{
+          activeBackgroundColor: '#3f51b5',
+          activeTintColor: 'white',
+          keyboardHidesTabBar: true,
+        }}>
+        <Tab.Screen
+          name="employee"
+          component={employeenavigation}
+          options={{
+            tabBarLabel: 'Labour',
+            tabBarIcon: ({focused}) => {
+              return (
+                <View>
+                  <Thumbnail
+                    small
+                    source={require('./custom/labor.png')}
+                    size={23}
+                  />
+                </View>
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name="customer"
+          component={Nav}
+          options={{
+            tabBarLabel: 'customer',
+            tabBarIcon: ({focused}) => {
+              return (
+                <View>
+                  <Thumbnail
+                    small
+                    rounded
+                    source={require('./custom/customer.png')}
+                  />
+                </View>
+              );
+            },
+          }}
+        />
+
+        <Tab.Screen
+          name="Dashboard"
+          component={Nav}
+          options={{
+            tabBarLabel: 'DashBoard',
+            tabBarIcon: ({focused}) => {
+              return (
+                <View>
+                  <Thumbnail small source={require('./custom/dashboard.png')} />
+                </View>
+              );
+            },
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
+export default bottomnavigation;

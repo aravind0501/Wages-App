@@ -1,0 +1,235 @@
+import React, {Component, useState} from 'react';
+import {
+  Container,
+  Header,
+  Content,
+  Card,
+  CardItem,
+  Text,
+  Right,
+  Body,
+  Icon,
+  Thumbnail,
+  Left,
+  Form,
+  Item,
+  Label,
+  Input,
+  Button,
+} from 'native-base';
+import ImagePicker from 'react-native-image-picker';
+import {ImageBackground} from 'react-native';
+const options = {
+  title: 'Select Avatar',
+  customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
+export default function customerdetails({navigation}) {
+  const [name, setName] = useState('null');
+  const [Phoneno, setPhoneno] = useState('null');
+  const [salary, setSalary] = useState('null');
+  const [worktype, setWorktype] = useState('null');
+  const [image, setImage] = useState('null');
+  function myimage() {
+    ImagePicker.showImagePicker(options, response => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = {uri: response.uri};
+        console.log('image reponse ');
+        setImage(source);
+      }
+    });
+  }
+
+  return (
+    <Container>
+      <Content>
+        <Card
+          style={{
+            marginTop: 40,
+            marginBottom: 40,
+            marginLeft: 20,
+            marginRight: 20,
+            borderWidth: 4,
+            paddingTop: 20,
+          }}>
+          <CardItem
+            style={{
+              height: 140,
+              flexDirection: 'row',
+              flex: 18,
+              height: 3,
+              borderBottomWidth: 0,
+              borderBottomColor: 'black',
+              paddingBottom: 30,
+            }}>
+            <Left style={{flexDirection: 'row', flex: 0}} />
+            <Body style={{flexDirection: 'row', flex: 15}} />
+            <Right style={{flexDirection: 'row', flex: 4}}>
+              <Icon
+                name="edit"
+                type="FontAwesome"
+                color="black"
+                style={{
+                  fontSize: 30,
+                  paddingTop: 10,
+                  color: 'black',
+                  paddingLeft: 20,
+                }}
+              />
+            </Right>
+          </CardItem>
+
+          <CardItem
+            style={{
+              height: 120,
+              flexDirection: 'row',
+              flex: 14,
+              paddingTop: 10,
+              height: 50,
+              borderBottomWidth: 0,
+              borderBottomColor: 'black',
+              paddingBottom: 125,
+            }}>
+            <Left style={{flexDirection: 'row', flex: 4}} />
+            <Body style={{flexDirection: 'row', flex: 8}}>
+              <ImageBackground
+                source={image}
+                style={{width: 120, height: 120}}
+                imageStyle={{borderRadius: 120 / 2}}>
+                <Icon
+                  name="pluscircle"
+                  type="AntDesign"
+                  style={{
+                    color: 'black',
+                    paddingTop: 30,
+                    paddingLeft: 30,
+                    fontSize: 60,
+                  }}
+                  onPress={myimage}
+                />
+              </ImageBackground>
+            </Body>
+          </CardItem>
+          <CardItem
+            style={{
+              borderBottomWidth: 0,
+              paddingTop: 5,
+              flexDirection: 'row',
+              flex: 14,
+            }}>
+            <Body style={{flex: 10, flexDirection: 'row'}}>
+              <Form style={{flex: 10, flexDirection: 'row'}}>
+                <Item rounded style={{backgroundColor: '#f2f6fc'}}>
+                  <Icon name="user" type="FontAwesome5" />
+                  <Input
+                    placeholder="Name"
+                    onChangeText={text => setName(text)}
+                    disabled={false}
+                  />
+                </Item>
+              </Form>
+            </Body>
+          </CardItem>
+          <CardItem
+            style={{
+              borderBottomWidth: 0,
+              paddingTop: 10,
+              flexDirection: 'row',
+              flex: 14,
+            }}>
+            <Body style={{flexDirection: 'row', flex: 10}}>
+              <Form style={{flexDirection: 'row', flex: 10}}>
+                <Item rounded style={{backgroundColor: '#f2f6fc'}}>
+                  <Icon name="call" />
+                  <Input
+                    placeholder="Phone no"
+                    onChangeText={text => setPhoneno(text)}
+                    keyboardType={'number-pad'}
+                  />
+                </Item>
+              </Form>
+            </Body>
+          </CardItem>
+          <CardItem
+            style={{
+              borderBottomWidth: 0,
+              paddingTop: 10,
+              flexDirection: 'row',
+              flex: 14,
+            }}>
+            <Body style={{flex: 10, flexDirection: 'row'}}>
+              <Form style={{flex: 10, flexDirection: 'row'}}>
+                <Item rounded style={{backgroundColor: '#f2f6fc'}}>
+                  <Icon name="dollar" type="FontAwesome" />
+                  <Input
+                    placeholder="Salary"
+                    onChangeText={text => setSalary(text)}
+                    keyboardType={'numeric'}
+                  />
+                </Item>
+              </Form>
+            </Body>
+          </CardItem>
+          <CardItem
+            style={{
+              borderBottomWidth: 0,
+              paddingTop: 20,
+              flexDirection: 'row',
+              flex: 14,
+            }}>
+            <Body style={{flex: 10, flexDirection: 'row'}}>
+              <Form style={{flexDirection: 'row', flex: 10}}>
+                <Item rounded style={{backgroundColor: '#f2f6fc'}}>
+                  <Thumbnail
+                    small
+                    source={require('./custom/renovation.png')}
+                  />
+                  <Input
+                    placeholder="worktype"
+                    onChangeText={text => setWorktype(text)}
+                  />
+                </Item>
+              </Form>
+            </Body>
+          </CardItem>
+          <CardItem
+            style={{flexDirection: 'row', flex: 18, borderBottomWidth: 0}}>
+            <Body style={{flexDirection: 'row', flex: 18}}>
+              <Button
+                style={{
+                  flexDirection: 'row',
+                  flex: 18,
+                  width: 90,
+                  justifyContent: 'center',
+                  borderRadius: 20,
+                }}
+                success
+                onPress={() =>
+                  navigation.navigate('employeelist', {
+                    employeename: name,
+                    phoneno: Phoneno,
+                    worktype: worktype,
+                    salary: salary,
+                    avatar: image,
+                  })
+                }>
+                <Text>Submit</Text>
+              </Button>
+            </Body>
+          </CardItem>
+        </Card>
+      </Content>
+    </Container>
+  );
+}

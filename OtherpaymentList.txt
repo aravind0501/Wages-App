@@ -1,0 +1,135 @@
+import React, {Component} from 'react';
+import {
+  Container,
+  Header,
+  Content,
+  Card,
+  CardItem,
+  Text,
+  Body,
+  Left,
+  Right,
+  Button,
+  Icon,
+  Thumbnail,
+} from 'native-base';
+import {View, ImageBackground, FlatList} from 'react-native';
+payment = [];
+oi = 0;
+export default function other({route, navigation}) {
+  if (route.params != undefined) {
+    if (route.params.value == true) {
+      const {amount} = route.params;
+      const {date} = route.params;
+      const {avatar} = route.params;
+      const {description} = route.params;
+      payment.push({
+        id: oi,
+        amount: amount,
+        date: date,
+        image: avatar,
+        description: description,
+      });
+      oi++;
+    }
+  }
+  if (route.params != undefined) {
+    if (route.params.value == false) {
+      console.log(route.params);
+      const {id} = route.params;
+      payment[id] = {
+        ...payment[id],
+        amount: route.params.amount,
+        date: route.params.date,
+      };
+    }
+  }
+  console.log(payment);
+  return (
+    <Container>
+      <Content padder>
+        <Button
+          warning
+          style={{
+            width: 180,
+            justifyContent: 'center',
+            marginLeft: 80,
+            marginRight: 80,
+            borderRadius: 10,
+            marginTop: 10,
+          }}
+          iconLeft
+          onPress={() => navigation.navigate('otherpayment', {value: true})}>
+          <Icon type="FontAwesome" style={{paddingLeft: 10}} name="dollar" />
+          <Text style={{marginRight: 20, fontWeight: 'bold', fontSize: 15}}>
+            Add Payment
+          </Text>
+        </Button>
+        <FlatList
+          extraData={payment}
+          keyExtractor={(payment, index) => payment.id}
+          data={payment}
+          numColumns={2}
+          renderItem={({item}) => {
+            return (
+              <Card style={{flex: 1, flexDirection: 'column', margin: 1}}>
+                <CardItem
+                  style={{
+                    height: 150,
+                    borderBottomWidth: 0,
+                    borderBottomColor: 'black',
+                    paddingBottom: 150,
+                  }}>
+                  <Body
+                    style={{
+                      flex: 3,
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      paddingLeft: 10,
+                    }}>
+                    <Thumbnail
+                      square
+                      source={item.image}
+                      style={{width: 130, height: 130}}
+                    />
+                  </Body>
+                </CardItem>
+                <CardItem
+                  style={{flexDirection: 'row', flex: 8, paddingLeft: 0}}>
+                  <Left style={{flex: 5, flexDirection: 'row'}}>
+                    <Text
+                      style={{fontWeight: 'bold', alignItems: 'flex-start'}}>
+                      Amount:
+                    </Text>
+                  </Left>
+                  <Body style={{flex: 3, flexDirection: 'row'}}>
+                    <Text style={{color: 'green'}}>{item.amount}</Text>
+                  </Body>
+                </CardItem>
+                <CardItem
+                  style={{paddingLeft: 0, flex: 12, flexDirection: 'row'}}>
+                  <Left style={{flex: 4, flexDirection: 'row'}}>
+                    <Text style={{fontWeight: 'bold'}}>Date:</Text>
+                  </Left>
+                  <Body style={{flex: 8, flexDirection: 'row'}}>
+                    <Text style={{color: 'green'}}>{item.date}</Text>
+                  </Body>
+                </CardItem>
+                <CardItem style={{flex: 18, flexDirection: 'row', height: 60}}>
+                  <Left style={{flex: 6, flexDirection: 'row'}} />
+                  <Body style={{flex: 10, flexDirection: 'row'}}>
+                    <Button
+                      style={{backgroundColor: '#5d9cec', borderRadius: 50}}>
+                      <Text>View</Text>
+                    </Button>
+                  </Body>
+                  <Right style={{flex: 2, flexDirection: 'row'}} />
+                </CardItem>
+              </Card>
+            );
+          }}
+        />
+      </Content>
+    </Container>
+  );
+}

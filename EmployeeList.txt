@@ -1,0 +1,130 @@
+import React, {Component} from 'react';
+import {
+  Container,
+  Content,
+  Item,
+  CheckBox,
+  Body,
+  CardItem,
+  Card,
+  Text,
+  Left,
+  Thumbnail,
+  Right,
+  Header,
+  Button,
+  Fab,
+  Icon,
+} from 'native-base';
+import {FlatList, TouchableWithoutFeedback} from 'react-native';
+employee = [];
+o = 0;
+export default function customerlist({route, navigation}) {
+  if (route.params != undefined) {
+    const {employeename} = route.params;
+    const {phoneno} = route.params;
+    const {salary} = route.params;
+    const {worktype} = route.params;
+    const {avatar} = route.params;
+    employee.push({
+      id: o,
+      employeename: employeename,
+      employeephone: phoneno,
+      salary: salary,
+      worktype: worktype,
+      avatar: avatar,
+    });
+    o++;
+  }
+  console.log(customer);
+  return (
+    <Container>
+      <Content>
+        <Button
+          danger
+          style={{
+            width: 180,
+            justifyContent: 'center',
+            marginLeft: 80,
+            marginRight: 80,
+            borderRadius: 10,
+            marginTop: 10,
+          }}
+          iconLeft
+          onPress={() => navigation.navigate('employeedetails')}>
+          <Icon name="add-user" type="Entypo" />
+          <Text style={{marginRight: 20, fontWeight: 'bold', fontSize: 15}}>
+            Add employee
+          </Text>
+        </Button>
+        <FlatList
+          extraData={employee}
+          keyExtractor={(employee, index) => employee.id}
+          data={employee}
+          numColumns={2}
+          renderItem={({item}) => {
+            return (
+              <Card style={{flex: 1, flexDirection: 'column', margin: 1}}>
+                <CardItem
+                  style={{
+                    height: 160,
+                    borderBottomWidth: 0,
+                    borderBottomColor: 'black',
+                    paddingBottom: 150,
+                  }}>
+                  <Body
+                    style={{
+                      flex: 3,
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      paddingLeft: 20,
+                    }}>
+                    <Thumbnail
+                      source={item.avatar}
+                      style={{width: 100, height: 100, borderRadius: 100 / 2}}
+                    />
+                    <Text
+                      style={{
+                        paddingTop: 10,
+                        fontWeight: 'bold',
+                        fontSize: 30,
+                        paddingBottom: 70,
+                      }}>
+                      {item.employeename}
+                    </Text>
+                  </Body>
+                </CardItem>
+                <CardItem style={{flex: 18, flexDirection: 'row', height: 60}}>
+                  <Left style={{flex: 4, flexDirection: 'row'}}>
+                    <Icon
+                      name="info"
+                      type="Foundation"
+                      style={{color: 'green'}}
+                    />
+                  </Left>
+                  <Body style={{flex: 8, flexDirection: 'row'}} />
+                  <Right style={{flex: 6, flexDirection: 'row'}}>
+                    <Button
+                      style={{
+                        width: 60,
+                        borderRadius: 10,
+                        height: 35,
+                      }}
+                      success
+                      onPress={() =>
+                        navigation.navigate('salary', {
+                          avatar: employee[item.id].avatar,
+                        })
+                      }>
+                      <Text>Pay</Text>
+                    </Button>
+                  </Right>
+                </CardItem>
+              </Card>
+            );
+          }}
+        />
+      </Content>
+    </Container>
+  );
+}

@@ -1,0 +1,211 @@
+import React, {Component} from 'react';
+import {
+  Container,
+  Header,
+  Content,
+  List,
+  ListItem,
+  Text,
+  Body,
+  Thumbnail,
+  cardBody,
+  Left,
+  Button,
+  Icon,
+  Right,
+  Card,
+  CardItem,
+} from 'native-base';
+import {View, Image} from 'react-native';
+import {TouchableHighlight} from 'react-native';
+export default function full({navigation}) {
+  return (
+    <Container>
+      <Content>
+        <Card
+          style={{
+            marginLeft: 10,
+            marginRight: 10,
+            marginTop: 10,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.58,
+            shadowRadius: 4.65,
+            borderRadius: 0,
+            elevation: 8,
+          }}>
+          <CardItem style={{height: 50, flex: 18, flexDirection: 'row'}}>
+            <Left style={{flex: 4, flexDirection: 'row'}} />
+            <Body style={{flex: 6, flexDirection: 'row'}}>
+              <Text style={{fontWeight: 'bold'}}>Project</Text>
+            </Body>
+          </CardItem>
+          <CardItem
+            style={{
+              height: 50,
+              flex: 18,
+              flexDirection: 'row',
+              borderBottomWidth: 0,
+            }}>
+            <Left style={{flex: 6, flexDirection: 'row'}}>
+              <Text style={{fontWeight: 'bold'}}>Total Value:</Text>
+            </Left>
+            <Body style={{flex: 6, flexDirection: 'row'}}>
+              <Text style={{color: 'green'}}>23,000</Text>
+            </Body>
+          </CardItem>
+          <CardItem style={{height: 50, flex: 18, flexDirection: 'row'}}>
+            <Left style={{flex: 6, flexDirection: 'row'}}>
+              <Text style={{fontWeight: 'bold'}}>Total Expenditure:</Text>
+            </Left>
+            <Body style={{flex: 6, flexDirection: 'row'}}>
+              <Text style={{color: 'red'}}>23,000</Text>
+            </Body>
+          </CardItem>
+        </Card>
+        <View style={{flex: 18, flexDirection: 'row'}}>
+          <List
+            style={{
+              flex: 9,
+              margin: 10,
+              height: 170,
+              width: 170,
+              borderWidth: 0,
+              borderColor: 'black',
+            }}>
+            <ListItem
+              style={{
+                height: 140,
+                width: 160,
+                borderBottomColor: 'black',
+                borderBottomWidth: 0,
+                marginLeft: 0,
+              }}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('assign')}
+                underlayColor={'white'}>
+                <Thumbnail
+                  large
+                  square
+                  source={require('./custom/worker.png')}
+                  style={{width: 120, height: 120, borderWidth: 0}}
+                />
+              </TouchableHighlight>
+            </ListItem>
+            <Text
+              style={{
+                paddingLeft: 10,
+                paddingRight: 10,
+                fontWeight: 'bold',
+                justifyContent: 'center',
+              }}>
+              Assign Employees
+            </Text>
+          </List>
+          <List
+            style={{
+              margin: 10,
+              height: 170,
+              wdth: 170,
+              borderWidth: 0,
+              borderColor: 'black',
+            }}>
+            <ListItem
+              style={{
+                height: 140,
+                width: 160,
+                borderBottomColor: 'black',
+                borderBottomWidth: 0,
+                marginLeft: 0,
+              }}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('accordion')}
+                underlayColor={'white'}>
+                <Thumbnail
+                  large
+                  square
+                  source={require('./custom/calendar.png')}
+                  style={{width: 120, height: 120, borderWidth: 0}}
+                />
+              </TouchableHighlight>
+            </ListItem>
+
+            <Text
+              style={{paddingLeft: 20, paddingRight: 0, fontWeight: 'bold'}}>
+              Attendance
+            </Text>
+          </List>
+        </View>
+        <View style={{flex: 18, flexDirection: 'row'}}>
+          <List
+            style={{
+              flex: 9,
+              margin: 10,
+              height: 170,
+              width: 170,
+              borderWidth: 0,
+              borderColor: 'black',
+            }}>
+            <ListItem
+              style={{
+                height: 140,
+                width: 160,
+                borderBottomColor: 'black',
+                borderBottomWidth: 0,
+                marginLeft: 0,
+              }}>
+              <TouchableHighlight underlayColor={'white'}>
+                <Thumbnail
+                  large
+                  square
+                  source={require('./custom/estimate.png')}
+                  style={{width: 120, height: 120, borderWidth: 0}}
+                />
+              </TouchableHighlight>
+            </ListItem>
+            <Text
+              style={{paddingLeft: 20, paddingRight: 10, fontWeight: 'bold'}}>
+              Project Details
+            </Text>
+          </List>
+          <List
+            style={{
+              margin: 10,
+              height: 170,
+              wdth: 170,
+              borderWidth: 0,
+              borderColor: 'black',
+            }}>
+            <ListItem
+              style={{
+                height: 140,
+                width: 160,
+                borderBottomColor: 'black',
+                borderBottomWidth: 0,
+                marginLeft: 0,
+              }}>
+              <TouchableHighlight
+                onPress={() => navigation.navigate('otherpayment')}
+                underlayColor={'white'}>
+                <Thumbnail
+                  large
+                  square
+                  source={require('./custom/other.png')}
+                  style={{width: 120, height: 120, borderWidth: 0}}
+                />
+              </TouchableHighlight>
+            </ListItem>
+
+            <Text
+              style={{paddingLeft: 20, paddingRight: 10, fontWeight: 'bold'}}>
+              Other Payment
+            </Text>
+          </List>
+        </View>
+      </Content>
+    </Container>
+  );
+}

@@ -1,0 +1,328 @@
+import React, {Component, useState} from 'react';
+import {
+  Container,
+  Content,
+  Card,
+  CardItem,
+  Text,
+  Body,
+  Icon,
+  Left,
+  Form,
+  Item,
+  Input,
+  Button,
+  Picker,
+  Right,
+} from 'native-base';
+import {ImageBackground} from 'react-native';
+import DatePicker from 'react-native-datepicker';
+import ImagePicker from 'react-native-image-picker';
+const options = {
+  title: 'Select Avatar',
+  customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
+
+export default function otherpayment({route, navigation}) {
+  const [amount, setAmount] = useState('null');
+  const [description, setDescription] = useState('null');
+  const [image, setImage] = useState('null');
+  const [follow, setFollow] = useState('Jan 10,2020');
+  function myimage() {
+    ImagePicker.showImagePicker(options, response => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = {uri: response.uri};
+        console.log('image reponse ');
+        setImage(source);
+      }
+    });
+  }
+  function amountpay() {
+    if (route.params.value == false) {
+      return (
+        <Input
+          placeholder="Amount"
+          onChangeText={text => setAmount(text)}
+          defaultValue={route.params.amount}
+        />
+      );
+    } else {
+      return (
+        <Input placeholder="Amount" onChangeText={text => setAmount(text)} />
+      );
+    }
+  }
+  function datechange() {
+    if (route.params.value == false) {
+      const [date, setDate] = useState(route.params.date);
+      return (
+        <DatePicker
+          date={date}
+          mode="date"
+          placeholder="select date"
+          format="MMM DD ,YYYY"
+          minDate="Jan 10 2020"
+          maxDate="Jan 20 2080"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              width: 0,
+              height: 0,
+            },
+            dateInput: {
+              borderWidth: 0,
+              alignItems: 'flex-start',
+            },
+          }}
+          onDateChange={date => {
+            setDate(date);
+            setFollow(date);
+          }}
+        />
+      );
+    } else {
+      const [date, setDate] = useState('Jan 10,2020');
+      return (
+        <DatePicker
+          date={date}
+          mode="date"
+          placeholder="select date"
+          format="MMM DD ,YYYY"
+          minDate="Jan 10 2020"
+          maxDate="Jan 20 2080"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              width: 0,
+              height: 0,
+            },
+            dateInput: {
+              borderWidth: 0,
+              alignItems: 'flex-start',
+            },
+          }}
+          onDateChange={date => {
+            setDate(date);
+            setFollow(date);
+          }}
+        />
+      );
+    }
+  }
+  function changedescription() {
+    if (route.params.value == false) {
+      return (
+        <Input
+          placeholder="Description"
+          onChangeText={text => setDescription(text)}
+          defaultValue={route.params.description}
+        />
+      );
+    } else {
+      return (
+        <Input
+          placeholder="Description"
+          onChangeText={text => setDescription(text)}
+        />
+      );
+    }
+  }
+  function buttonchange() {
+    if (route.params.value == false) {
+      return (
+        <Button
+          style={{
+            flexDirection: 'row',
+            flex: 18,
+            width: 90,
+            justifyContent: 'center',
+            borderRadius: 20,
+          }}
+          success
+          onPress={() =>
+            navigation.navigate('other', {
+              id: route.params.id,
+              amount: amount,
+              date: follow,
+              avatar: image,
+              value: false,
+              description: description,
+            })
+          }>
+          <Text>save</Text>
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          style={{
+            flexDirection: 'row',
+            flex: 18,
+            width: 90,
+            justifyContent: 'center',
+            borderRadius: 20,
+          }}
+          success
+          onPress={() =>
+            navigation.navigate('other', {
+              amount: amount,
+              date: follow,
+              avatar: image,
+              value: true,
+              description: description,
+            })
+          }>
+          <Text>submit</Text>
+        </Button>
+      );
+    }
+  }
+  return (
+    <Container>
+      <Content>
+        <Card
+          style={{
+            marginTop: 40,
+            marginBottom: 40,
+            marginLeft: 20,
+            marginRight: 20,
+            borderWidth: 4,
+            paddingTop: 0,
+          }}>
+          <CardItem
+            style={{
+              height: 260,
+              flexDirection: 'row',
+              flex: 18,
+              height: 3,
+              borderBottomWidth: 0,
+              borderBottomColor: 'black',
+              borderTopColor: 'black',
+              paddingBottom: 200,
+              paddingTop: 0,
+              paddingLeft: 0,
+            }}>
+            <Body style={{flexDirection: 'row', flex: 18}}>
+              <ImageBackground source={image} style={{width: 320, height: 200}}>
+                <Icon
+                  name="edit"
+                  type="FontAwesome"
+                  color="black"
+                  style={{
+                    fontSize: 30,
+                    paddingTop: 10,
+                    color: 'white',
+                    paddingLeft: 290,
+                  }}
+                />
+                <Icon
+                  name="pluscircle"
+                  type="AntDesign"
+                  style={{
+                    fontSize: 60,
+                    paddingTop: 30,
+                    color: 'black',
+                    paddingLeft: 140,
+                  }}
+                  onPress={myimage}
+                />
+              </ImageBackground>
+            </Body>
+          </CardItem>
+
+          <CardItem
+            style={{
+              borderBottomWidth: 0,
+              paddingTop: 5,
+              flexDirection: 'row',
+              flex: 14,
+            }}>
+            <Body style={{flex: 10, flexDirection: 'row'}}>
+              <Form style={{flex: 10, flexDirection: 'row', paddingTop: 10}}>
+                <Item rounded style={{backgroundColor: '#f2f6fc'}}>
+                  <Icon name="dollar" type="FontAwesome" />
+
+                  {amountpay()}
+                </Item>
+              </Form>
+            </Body>
+          </CardItem>
+
+          <CardItem
+            style={{
+              borderBottomWidth: 0,
+              paddingTop: 10,
+              flexDirection: 'row',
+              flex: 14,
+            }}>
+            <Body style={{flex: 10, flexDirection: 'row'}}>
+              <Form style={{flex: 10, flexDirection: 'row'}}>
+                <Item
+                  rounded
+                  style={{
+                    backgroundColor: '#f2f6fc',
+                  }}>
+                  <Icon name="sort-by-alpha" type="MaterialIcons" />
+                  {changedescription()}
+                </Item>
+              </Form>
+            </Body>
+          </CardItem>
+          <CardItem
+            style={{
+              borderBottomWidth: 0,
+              paddingTop: 10,
+              flexDirection: 'row',
+              flex: 14,
+            }}>
+            <Body style={{flex: 10, flexDirection: 'row'}}>
+              <Form style={{flex: 10, flexDirection: 'row'}}>
+                <Item
+                  rounded
+                  style={{
+                    backgroundColor: '#f2f6fc',
+                    flex: 10,
+                    flexDirection: 'row',
+                  }}>
+                  <Icon name="calendar" type="AntDesign" />
+
+                  {datechange()}
+                </Item>
+              </Form>
+            </Body>
+          </CardItem>
+          <CardItem style={{flexDirection: 'row', flex: 12}}>
+            <Body style={{flexDirection: 'row', flex: 6}} />
+            <Right
+              style={{
+                flexDirection: 'row',
+                flex: 6,
+              }}
+            />
+          </CardItem>
+
+          <CardItem
+            style={{flexDirection: 'row', flex: 18, borderBottomWidth: 0}}>
+            <Body style={{flexDirection: 'row', flex: 18}}>
+              {buttonchange()}
+            </Body>
+          </CardItem>
+        </Card>
+      </Content>
+    </Container>
+  );
+}
